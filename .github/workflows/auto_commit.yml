@@ -1,0 +1,37 @@
+name: Automatic Commit Activity
+
+on:
+  schedule:
+    # Runs every day at 12:00 UTC
+    - cron: '0 12 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  auto-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Git User Identity
+        run: |
+          git config --global user.name "Maitre-Mad"
+          git config --global user.email "dickomahamane.md@gmail.com"
+
+      - name: Make Automated Commit Entry
+        run: |
+          mkdir -p .github
+          echo "Automated activity update: $(date -u)" >> .github/activity.log
+          git add .github/activity.log
+          git diff --quiet && git diff --staged --quiet || git commit -m "chore: automated activity update [skip ci]"
+
+      - name: Push Changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git push origin main || git push origin HEAD:main
