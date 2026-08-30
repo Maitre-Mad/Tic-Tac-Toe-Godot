@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://cfkcntk0l3rja"]
+
+[ext_resource type="Script" uid="uid://b1cpoq254kyuh" path="res://main.gd" id="1_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://cpsgjsq40kion" path="res://board.tscn" id="2_h2yge"]
+
+[node name="Main" type="Node" unique_id=1326826514]
+script = ExtResource("1_0xm2m")
+
+[node name="Board" parent="." unique_id=1890972882 instance=ExtResource("2_h2yge")]
+position = Vector2(300, 300)
